@@ -50,40 +50,102 @@
         <div class="hero-body">
             <div class="columns">
                 <div class="column nested">
-                    {% set ns = namespace(long_cols=0,num_in_col=0) %}
-                    {% set num_cols = 6 %}
-                    {% for skill in skills if skill.name %}
-                        {% set remainder = loop.length % num_cols %}
-                        {% if ns.long_cols < remainder %}
-                            {% set num_rows = (loop.length / num_cols)|round(0, 'ceil') %}
-                        {% else %}
-                            {% set num_rows = ((loop.length / num_cols) - 1)|round(0, 'ceil') %}
-                        {% endif %}
-                        {% if ns.num_in_col >= num_rows %}
-                            {% set ns.long_cols = ns.long_cols + 1 %}
-                            {% set ns.num_in_col = 0 %}
-                            </div>
-                            <div class="column nested">
-                        {% endif %}
-                        <div class="notification has-text-centered">
-                            {% if skill.img %}
-                                <div class="image">
-                                    <a href="{{ skill.url }}">
-                                        <img src="{{ url_for('static', filename="assets/icons/" + skill.img) }}" alt="{{ skill.name }} Logo">
-                                    </a>
-                                </div>
-                            {% endif %}
-                            <span class="has-text-centered has-text-dark">
-                                <a href="{{ skill.url }}">
-                                    {{ skill.name }}
-                                </a>
-                            </span>
+                    <div class="notification has-text-centered">
+                        <div class="image">
+                            <a href="https://www.python.org/">
+                                <img src="{{ url_for('static', filename='assets/icons/python.png') }}", alt="Python Logo">
+                            </a>
                         </div>
-                        {% set ns.num_in_col = ns.num_in_col + 1 %}
-                        {% if loop.last %}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                        <span class="has-text-centered has-text-dark">
+                            <a href="https://www.python.org/">
+                                Python
+                            </a>
+                        </span>
+                    </div>
+
+                    <div class="notification has-text-centered">
+                        <div class="image">
+                            <a href="https://www.freenas.org/">
+                                <img src="{{ url_for('static', filename='assets/icons/freenas.jpg') }}", alt="FreeNAS Logo">
+                            </a>
+                        </div>
+                        <span class="has-text-centered has-text-dark">
+                            <a href="https://www.freenas.org/">
+                                FreeNAS
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="column nested">
+                    <div class="notification has-text-centered">
+                        <div class="image">
+                            <a href="https://www.latex-project.org/">
+                                <img src="{{ url_for('static', filename='assets/icons/latex.png') }}", alt="LaTeX Logo">
+                            </a>
+                        </div>
+                        <span class="has-text-centered has-text-dark">
+                            <a href="https://www.latex-project.org/">
+                                LaTeX
+                            </a>
+                        </span>
+                    </div>
+
+                    <div class="notification has-text-centered">
+                        <div class="image">
+                            <a href="https://flask-sqlalchemy.palletsprojects.com/">
+                                <img src="{{ url_for('static', filename='assets/icons/flask.jpeg') }}", alt="Flask Logo">
+                            </a>
+                        </div>
+                        <span class="has-text-centered has-text-dark">
+                            <a href="https://flask-sqlalchemy.palletsprojects.com/">
+                                Flask
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="column nested">
+                    <div class="notification has-text-centered">
+                        <div class="image">
+                            <a href="https://www.pfsense.org/">
+                                <img src="{{ url_for('static', filename='assets/icons/pfsense.jpeg') }}", alt="pfSense Logo">
+                            </a>
+                        </div>
+                        <span class="has-text-centered has-text-dark">
+                            <a href="https://www.pfsense.org/">
+                                pfSense
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="column nested">
+                    <div class="notification has-text-centered">
+                        <div class="image">
+                            <a href="https://www.php.net/">
+                                <img src="{{ url_for('static', filename='assets/icons/php.png') }}", alt="PHP Logo">
+                            </a>
+                        </div>
+                        <span class="has-text-centered has-text-dark">
+                            <a href="https://www.php.net/">
+                                PHP
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="column nested">
+                    <div class="notification has-text-centered">
+                        <div class="image">
+                            <img src="{{ url_for('static', filename='assets/icons/sql.jpeg') }}", alt="SQL Logo">
+                        </div>
+                        <span class="has-text-centered has-text-dark">
+                            SQL
+                        </span>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
