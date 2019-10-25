@@ -21,6 +21,9 @@
                 <img src="{{ url_for('static', filename='static/assets/logo.png') }}"
                      alt="Benji Levine logo">
             </a>
+            <a class="navbar-item" href="/">
+                <strong>Benji Levine</strong>
+            </a>
 
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main_navbar">
                 <span aria-hidden="true"></span>
@@ -47,7 +50,7 @@
         </div>
     {% endblock %}
 </nav>
-<section class="section hero is-info">
+<section>
     {% for message in get_flashed_messages() %}
         <div class="flash">{{ message }}</div>
     {% endfor %}
@@ -56,7 +59,7 @@
 <footer class="footer is-dark hero is-paddingless">
     <div class="content has-text-centered hero-body">
         <p>
-            <strong>Benji Levine</strong> &#169; {{ year }}
+            <strong class="has-text-light">Benji Levine</strong> &#169; {{ year }}
         </p>
     </div>
 </footer>
