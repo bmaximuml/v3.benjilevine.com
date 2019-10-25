@@ -1,2 +1,5 @@
-recursive-include benjilevine.com/templates *
-recursive-include benjilevine.com/static *
+include *.py
+include requirements.txt
+recursive-include .ebextensions *
+recursive-include templates *
+recursive-include static *
