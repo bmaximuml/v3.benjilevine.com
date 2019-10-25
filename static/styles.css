@@ -5,3 +5,7 @@
 .notification {
     margin: 0.75rem;
 }
+
+div.column.nested {
+    padding: 0;
+}
