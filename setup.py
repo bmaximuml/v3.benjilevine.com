@@ -10,5 +10,8 @@ setup(
     install_requires=[
         'datetime',
         'Flask'
-    ]
+    ],
+    author='Benji Levine',
+    author_email='benji@benjilevine.com',
+    url='https://github.com/benjilev08/v3.benjilevine.com'
 )
