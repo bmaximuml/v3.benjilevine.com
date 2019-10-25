@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='benjilevine.com',
-    version='0.0.1.dev',
+    version='0.1.dev',
     long_description=__doc__,
     packages=['benjilevine.com'],
     include_package_data=True,
