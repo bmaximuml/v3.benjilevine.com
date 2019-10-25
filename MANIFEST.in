@@ -1,2 +1,2 @@
-recursive-include benjilevine.com/templates *
-recursive-include benjilevine.com/static *
+recursive-include templates *
+recursive-include static *
