@@ -14,12 +14,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <nav class="navbar is-fixed-top is-primary" role="navigation" aria-label="main navigation">
+<nav class="navbar is-fixed-top is-primary" role="navigation" aria-label="main navigation">
     {% block nav %}
         <div class="navbar-brand">
             <a class="navbar-item" href="/">
                 <img src="{{ url_for('static', filename='static/assets/logo.png') }}"
-                alt="Benji Levine logo">
+                     alt="Benji Levine logo">
             </a>
 
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main_navbar">
@@ -46,20 +46,20 @@
             </div>
         </div>
     {% endblock %}
-  </nav>
-    <section class="section hero is-info">
-      {% for message in get_flashed_messages() %}
+</nav>
+<section class="section hero is-info">
+    {% for message in get_flashed_messages() %}
         <div class="flash">{{ message }}</div>
-      {% endfor %}
-      {% block content %}{% endblock %}
-    </section>
-    <footer class="footer is-dark hero is-paddingless">
-        <div class="content has-text-centered hero-body">
-            <p>
-                <strong>Benji Levine</strong> &#169; {{ year }}
-            </p>
-        </div>
-    </footer>
+    {% endfor %}
+    {% block content %}{% endblock %}
+</section>
+<footer class="footer is-dark hero is-paddingless">
+    <div class="content has-text-centered hero-body">
+        <p>
+            <strong>Benji Levine</strong> &#169; {{ year }}
+        </p>
+    </div>
+</footer>
 </body>
 </html>
 
