@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-gb" class="has-navbar-fixed-top">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% if title is defined %}
+            {{ title }}
+        {% else %}
+            Benji Levine
+        {% endif %}
+    </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <nav class="navbar is-fixed-top is-primary" role="navigation" aria-label="main navigation">
+    {% block nav %}
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <img src="{{ url_for('static', filename='static/assets/logo.png') }}"
+                alt="Benji Levine logo">
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main_navbar">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="main_navbar" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item">
+                    About
+                </a>
+                <a class="navbar-item">
+                    Projects
+                </a>
+                <a class="navbar-item">
+                    Skills
+                </a>
+                <a class="navbar-item">
+                    Contact
+                </a>
+            </div>
+        </div>
+    {% endblock %}
+  </nav>
+    <section class="section hero is-info">
+      {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+      {% endfor %}
+      {% block content %}{% endblock %}
+    </section>
+    <footer class="footer is-dark hero is-paddingless">
+        <div class="content has-text-centered hero-body">
+            <p>
+                <strong>Benji Levine</strong> &#169; {{ year }}
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
+
