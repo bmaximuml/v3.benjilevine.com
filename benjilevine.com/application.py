@@ -6,3 +6,6 @@ application = Flask(__name__)
 def about():
     return render_template('index.html', year=datetime.now().year)
 
+if __name__ == '__main__':
+    application.debug = True
+    application.run()
