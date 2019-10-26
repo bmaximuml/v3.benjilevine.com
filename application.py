@@ -1,7 +1,9 @@
 from datetime import datetime
 from flask import Flask, render_template
 from json import loads
+from os import environ
 application = Flask(__name__)
+application.secret_key = environ['FLASK_SECRET_KEY']
 
 
 @application.route('/')
