@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, render_template
+from flask import Flask, flash, render_template, redirect, url_for
 from flask_wtf import FlaskForm
 from json import loads
 from os import environ
@@ -12,7 +12,6 @@ application = Flask(__name__)
 application.secret_key = environ['FLASK_SECRET_KEY']
 
 
-@application.route('/')
 class ContactForm(FlaskForm):
     name = StringField('Name',
                        validators=[DataRequired(), length(max=200)],
@@ -27,11 +26,21 @@ class ContactForm(FlaskForm):
     submit = SubmitField('Send', render_kw={"class": "button is-link"})
 
 
+@application.route('/', methods=['POST', 'GET'])
 def about():
     with open('data/skills.json') as skills_f:
         skills = loads(skills_f.read())
 
-    return render_template('index.html', year=datetime.now().year, skills=skills['skills'])
+    form = ContactForm()
+    if form.validate_on_submit():
+        flash('Message successfully sent!')
+        return redirect(url_for('about', _anchor='contact'))
+
+    return render_template('index.html',
+                           year=datetime.now().year,
+                           skills=skills['skills'],
+                           form=form
+                           )
 
 
 if __name__ == '__main__':

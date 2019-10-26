@@ -105,32 +105,44 @@
         <div class="hero-body">
             <div class="columns">
                 <div class="column notification is-light">
-                    <div class="field">
-                        <p class="control has-icons-left">
-                            <input class="input" type="text" placeholder="Name">
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-user"></i>
-                            </span>
-                        </p>
-                    </div>
-                    <div class="field">
-                        <p class="control has-icons-left">
-                            <input class="input" type="email" placeholder="Email">
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-envelope"></i>
-                            </span>
-                        </p>
-                    </div>
-                    <div class="field">
-                        <p class="control">
-                            <textarea class="textarea" placeholder="Enter your message here..."></textarea>
-                        </p>
-                    </div>
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-link">Submit</button>
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="field notification is-primary">
+                                    <span><strong>{{ message }}</strong></span>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <form method="post" action="/" name="contact">
+                        {{ form.csrf_token }}
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                {{ form.name }}
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </p>
                         </div>
-                    </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                {{ form.email }}
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control">
+                                {{ form.message }}
+                            </p>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                {{ form.submit }}
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="column notification is-light">
