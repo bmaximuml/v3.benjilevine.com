@@ -53,7 +53,13 @@
     <div class="hero is-info" id="cv">
         <div class="hero-body">
             <div class="columns">
+                <div class="column notification is-one-third is-light">
+                    <div class="image is-square">
+                        <img src="{{ url_for('static', filename='assets/Madrid.jpg') }}" alt="Benji Levine photo">
+                    </div>
+                </div>
                 <div class="column notification is-light">
+                    <a class="button is-primary is-fullwidth is-large" href="{{ url_for('static', filename='assets/Benji_Levine_CV.pdf') }}"><strong>Download Benji's CV here</strong></a>
                 </div>
             </div>
         </div>
