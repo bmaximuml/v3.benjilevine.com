@@ -11,23 +11,24 @@
                     </p>
                     <br>
                     <p>
-                        Benji is currently travelling the world to learn about different cultures and discover new areas of interest.
+                        Benji is currently <strong>travelling the world</strong> to learn about different cultures and discover new areas of interest.
                     </p>
                     <p>
                         Having started travelling in October 2019, he has so far visited Madrid and Paris.
                     </p>
                     <br>
                     <p>
-                        Benji graduated from the University of Warwick in July 2019 with a high 2:1 in Computer Systems Engineering BEng.
+                        Benji graduated from the University of Warwick in July 2019 with a <strong>high 2:1</strong> in Computer Systems Engineering BEng.
                         He was one of the first eight students to study Computer Systems Engineering at Warwick, and one of the first five to graduate.
                         The course provided <a href="#skills">a variety of valuable skills</a>, particularly helped by Benji's personal tutors; Matt Leeke and Suhaib Fahmy.
                     </p>
                     <p>
-                    Suhaib Fahmy also supervised Benji during his final year project on <span class="is-italic">Modelling Smart Field-Programmable Gate Array Switches in the Network</span>. The report for this project can be found <a href="{{ url_for('static', filename='assets/final_report.pdf') }}">here</a>, and the project code is publicly available on <a href="https://github.com/benjilev08/fpga_switch_model">GitHub</a>.
+                        Suhaib Fahmy also supervised Benji during his final year project on <strong>Modelling Smart Field-Programmable Gate Array Switches in the Network</strong>.
+                        The report for this project can be found <a href="{{ url_for('static', filename='assets/final_report.pdf') }}">here</a>, and the project code is publicly available on <a href="https://github.com/benjilev08/fpga_switch_model">GitHub</a>.
                     </p>
                     <br>
                     <p>
-                        Whilst at Warwick, Benji held the position of <span class="is-italic">IT Officer</span> at <a href="https://warwick.film/">Warwick Student Cinema</a> for two years.
+                        Whilst at Warwick, Benji held the position of <span class="is-italic">IT Officer</span> at <strong><a href="https://warwick.film/">Warwick Student Cinema</a></strong> for two years.
                         This position involved managing all of the society's IT equipment, including firewalls, Windows and Linux servers, a large PHP-based website, various database, containers, virtual machines, an internal Wi-Fi network, network switches, an Active Directory for 50+ users, Windows workstations, an electronic point-of-sale (EPOS) system, and more.
                         The experience gained from this position was invaluable, providing exposure to equipment and architectures which are hard to find outside of a professional environment.
                     </p>
@@ -47,7 +48,43 @@
     </div>
     <div class="hero is-dark" id="skills">
         <div class="hero-body">
-
+            <div class="columns">
+                <div class="column nested">
+                    {% set ns = namespace(long_cols=0,num_in_col=0) %}
+                    {% set num_cols = 6 %}
+                    {% for skill in skills if skill.name %}
+                        {% set remainder = loop.length % num_cols %}
+                        {% if ns.long_cols < remainder %}
+                            {% set num_rows = (loop.length / num_cols)|round(0, 'ceil') %}
+                        {% else %}
+                            {% set num_rows = ((loop.length / num_cols) - 1)|round(0, 'ceil') %}
+                        {% endif %}
+                        {% if ns.num_in_col >= num_rows %}
+                            {% set ns.long_cols = ns.long_cols + 1 %}
+                            {% set ns.num_in_col = 0 %}
+                            </div>
+                            <div class="column nested">
+                        {% endif %}
+                        <div class="notification has-text-centered">
+                            {% if skill.img %}
+                                <div class="image">
+                                    <a href="{{ skill.url }}">
+                                        <img src="{{ url_for('static', filename="assets/icons/" + skill.img) }}" alt="{{ skill.name }} Logo">
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <span class="has-text-centered has-text-dark">
+                                <a href="{{ skill.url }}">
+                                    {{ skill.name }}
+                                </a>
+                            </span>
+                        </div>
+                        {% set ns.num_in_col = ns.num_in_col + 1 %}
+                        {% if loop.last %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+            </div>
         </div>
     </div>
     <div class="hero is-info" id="cv">
@@ -66,7 +103,70 @@
     </div>
     <div class="hero is-dark" id="contact">
         <div class="hero-body">
+            <div class="columns">
+                <div class="column notification is-light">
+                    <div class="field">
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Name">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left">
+                            <input class="input" type="email" placeholder="Email">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control">
+                            <textarea class="textarea" placeholder="Enter your message here..."></textarea>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-link">Submit</button>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="column notification is-light">
+                    <div class="buttons">
+                        <a class="button is-medium is-fullwidth" href="https://www.linkedin.com/in/benjilevine/">
+                            <span class="icon">
+                                <i class="fab fa-linkedin"></i>
+                            </span>
+                            <span>
+                                LinkedIn
+                            </span>
+                        </a>
+                    </div>
+                    <div class="buttons">
+                        <a class="button is-medium is-dark is-fullwidth" href="https://github.com/benjilev08/">
+                            <span class="icon">
+                                <i class="fab fa-github"></i>
+                            </span>
+                            <span>
+                                GitHub
+                            </span>
+                        </a>
+
+                    </div>
+                    <div class="buttons">
+                        <a class="button is-medium is-fullwidth" href="mailto:benji@benjilevine.com">
+                            <span class="icon">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <span>
+                                benji@benjilevine.com
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

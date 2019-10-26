@@ -1,0 +1,79 @@
+{
+  "skills": [
+    {
+      "name": "Python",
+      "url": "https://www.python.org/",
+      "img": "python.png"
+    },
+    {
+      "name": "FreeNAS",
+      "url": "https://www.freenas.org/",
+      "img": "freenas.jpg"
+    },
+    {
+      "name": "LaTeX",
+      "url": "https://www.latex-project.org/",
+      "img": "latex.png"
+    },
+    {
+      "name": "Flask",
+      "url": "https://flask.palletsprojects.com/en/1.1.x/",
+      "img": "flask.jpeg"
+    },
+    {
+      "name": "pfSense",
+      "url": "https://www.pfsense.org/",
+      "img": "pfsense.jpeg"
+    },
+    {
+      "name": "PHP",
+      "url": "https://www.php.net/",
+      "img": "php.png"
+    },
+    {
+      "name": "SQL",
+      "img": "sql.jpeg"
+    },
+    {
+      "name": "JavaScript",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+      "img": "javascript.png"
+    },
+    {
+      "name": "CSS",
+      "url": "https://www.w3.org/Style/CSS/",
+      "img": "css.png"
+    },
+    {
+      "name": "HTML",
+      "url": "https://html.spec.whatwg.org/multipage/",
+      "img": "html.png"
+    },
+    {
+      "name": "MATLAB",
+      "url": "https://www.mathworks.com/products/matlab.html",
+      "img": "matlab.png"
+    },
+    {
+      "name": "Verilog",
+      "url": "https://standards.ieee.org/standard/1800-2017.html",
+      "img": "verilog.png"
+    },
+    {
+      "name": "Jenkins",
+      "url": "https://jenkins.io/",
+      "img": "jenkins.png"
+    },
+    {
+      "name": "Nginx",
+      "url": "https://www.nginx.com/",
+      "img": "nginx.png"
+    },
+    {
+      "name": "Travis CI",
+      "url": "https://travis-ci.com/",
+      "img": "travis.png"
+    }
+  ]
+}
+
