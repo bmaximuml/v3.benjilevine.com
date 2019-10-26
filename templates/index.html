@@ -66,11 +66,13 @@
                             <div class="column nested">
                         {% endif %}
                         <div class="notification has-text-centered">
-                            <div class="image">
-                                <a href="{{ skill.url }}">
-                                    <img src="{{ url_for('static', filename=skill.img) }}" alt="{{ skill.name }} Logo">
-                                </a>
-                            </div>
+                            {% if skill.img %}
+                                <div class="image">
+                                    <a href="{{ skill.url }}">
+                                        <img src="{{ url_for('static', filename=skill.img) }}" alt="{{ skill.name }} Logo">
+                                    </a>
+                                </div>
+                            {% endif %}
                             <span class="has-text-centered has-text-dark">
                                 <a href="{{ skill.url }}">
                                     {{ skill.name }}
