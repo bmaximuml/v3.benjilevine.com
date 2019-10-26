@@ -9,7 +9,8 @@ setup(
     zip_safe=True,
     install_requires=[
         'datetime',
-        'Flask'
+        'Flask',
+        'WTForms'
     ],
     author='Benji Levine',
     author_email='benji@benjilevine.com',
