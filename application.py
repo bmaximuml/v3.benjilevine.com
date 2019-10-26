@@ -17,15 +17,30 @@ application.secret_key = environ['FLASK_SECRET_KEY']
 class ContactForm(FlaskForm):
     name = StringField('Name',
                        validators=[DataRequired(), length(max=200)],
-                       render_kw={"placeholder": "Name", "class": "input"})
+                       render_kw={
+                           "placeholder": "Name",
+                           "class": "input",
+                           "maxlength": 200
+                       })
     email = EmailField('Email Address',
                        validators=[DataRequired(), length(max=200)],
-                       render_kw={"placeholder": "Email", "class": "input"})
+                       render_kw={
+                           "placeholder": "Email",
+                           "class": "input",
+                           "maxlength": 200
+                        })
     message = TextAreaField('Message',
                             validators=[DataRequired(), length(max=5000)],
-                            render_kw={"placeholder": "Enter your message here...",
-                                       "class": "input"})
-    submit = SubmitField('Send', render_kw={"class": "button is-link"})
+                            render_kw={
+                                "placeholder": "Enter your message here...",
+                                "class": "textarea",
+                                "rows": 5,
+                                "maxlength": 5000
+                            })
+    submit = SubmitField('Send',
+                         render_kw={
+                             "class": "button is-link"
+                         })
 
 
 @application.route('/', methods=['POST', 'GET'])
