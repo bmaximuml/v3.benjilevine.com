@@ -1,7 +1,8 @@
-from flask import Flask, render_template
 from datetime import datetime
+from flask import Flask, render_template
 from json import loads
 application = Flask(__name__)
+
 
 @application.route('/')
 def about():
@@ -9,6 +10,7 @@ def about():
         skills = loads(skills_f.read())
 
     return render_template('index.html', year=datetime.now().year, skills=skills['skills'])
+
 
 if __name__ == '__main__':
     application.debug = True
