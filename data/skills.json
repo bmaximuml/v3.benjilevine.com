@@ -1,0 +1,39 @@
+{
+  "skills": [
+    {
+      "name": "Python",
+      "url": "https://www.python.org/",
+      "img": "assets/icons/python.png"
+    },
+    {
+      "name": "FreeNAS",
+      "url": "https://www.freenas.org/",
+      "img": "assets/icons/freenas.jpg"
+    },
+    {
+      "name": "LaTeX",
+      "url": "https://www.latex-project.org/",
+      "img": "assets/icons/latex.png"
+    },
+    {
+      "name": "Flask",
+      "url": "https://flask.palletsprojects.com/en/1.1.x/",
+      "img": "assets/icons/flask.jpeg"
+    },
+    {
+      "name": "pfSense",
+      "url": "https://www.pfsense.org/",
+      "img": "assets/icons/pfsense.jpeg"
+    },
+    {
+      "name": "PHP",
+      "url": "https://www.php.net/",
+      "img": "assets/icons/php.png"
+    },
+    {
+      "name": "SQL",
+      "img": "assets/icons/sql.jpeg"
+    }
+  ]
+}
+
