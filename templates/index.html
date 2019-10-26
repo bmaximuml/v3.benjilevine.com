@@ -69,7 +69,7 @@
                             {% if skill.img %}
                                 <div class="image">
                                     <a href="{{ skill.url }}">
-                                        <img src="{{ url_for('static', filename=skill.img) }}" alt="{{ skill.name }} Logo">
+                                        <img src="{{ url_for('static', filename="assets/icons/" + skill.img) }}" alt="{{ skill.name }} Logo">
                                     </a>
                                 </div>
                             {% endif %}
