@@ -31,7 +31,7 @@ class ContactForm(Form):
                            "placeholder": "Email",
                            "class": "input",
                            "maxlength": 200
-                        })
+                       })
     message = TextAreaField('Message',
                             validators=[DataRequired(), length(max=5000)],
                             render_kw={
