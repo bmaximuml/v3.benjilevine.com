@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 .column {
     height: 100%;
 }
