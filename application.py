@@ -67,7 +67,7 @@ class ContactForm(Form):
 @application.route('/', methods=['POST', 'GET'])
 def about():
     skills = Skill.query.all()
-    about = About.query.order_by(About.priority).all()
+    about_data = About.query.order_by(About.priority).all()
     projects = Project.query.all()
 
     form = ContactForm(request.form)
@@ -81,7 +81,7 @@ def about():
 
     return render_template('index.html',
                            year=datetime.now().year,
-                           about=about,
+                           about=about_data,
                            projects=projects,
                            skills=skills,
                            form=form
