@@ -11,9 +11,9 @@ from wtforms.validators import DataRequired, Email, length
 from models import db, Skill
 
 
-def create_app():
-    application = Flask(__name__)
-    application.secret_key = environ['FLASK_SECRET_KEY']
+def create_application():
+    app = Flask(__name__)
+    app.secret_key = environ['FLASK_SECRET_KEY']
     sqlalchemy_database_uri = (
         'mysql+mysqlconnector://{}:{}@{}:{}/benjilevine.com'.format(
             environ['BENJI_LEVINE_DB_USERNAME'],
@@ -22,14 +22,14 @@ def create_app():
             environ['BENJI_LEVINE_DB_PORT']
         )
     )
-    application.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
-    application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    db.init_app(application)
-    return application
+    db.init_app(app)
+    return app
 
 
-application = create_app()
+application = create_application()
 
 
 class ContactForm(Form):
