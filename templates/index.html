@@ -8,7 +8,7 @@
             
             <div class="columns">
                 <div class="column is-vertical is-two-thirds">
-                    {% for item in about %}
+                    {% for item in about|sort(attribute="priority") %}
                         <div class="notification is-{{ loop.cycle('light', 'info') }}">
                             {{ item.content|safe }}
                         </div>
@@ -32,7 +32,7 @@
             <div class="notification is-dark is-paddingless">
                 <div class="tabs is-boxed is-marginless">
                     <ul id="projects-tabs">
-                        {% for project in projects %}
+                        {% for project in projects|sort(attribute="priority") %}
                             {% if loop.first %}
                                 <li id='{{ project.name|replace(' ', '') }}' class="is-active">
                             {% else %}
@@ -46,7 +46,7 @@
                     </ul>
                 </div>
                 <div id="projects-content">
-                    {% for project in projects %}
+                    {% for project in projects|sort(attribute="priority") %}
                         {% if loop.first %}
                             <div id='{{ project.name|replace(' ', '') }}-content' class="notification is-light is-radiusless is-marginless">
                         {% else %}
@@ -54,7 +54,7 @@
                         {% endif %}
                             {% if project.tags|length %}
                                 <div class="tags">
-                                    {% for tag in project.tags %}
+                                    {% for tag in project.tags|sort(attribute="colour") %}
                                         <span class="tag is-{{ tag.colour }}">{{ tag.name }}</span>
                                     {% endfor %}
                                 </div>
