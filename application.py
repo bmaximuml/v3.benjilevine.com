@@ -22,6 +22,8 @@ def create_app():
                                                      + environ['BENJI_LEVINE_DB_HOST']
                                                      + ':'
                                                      + environ['BENJI_LEVINE_DB_PORT']
+                                                     + '/'
+                                                     + 'benjilevine.com'
                                                      )
     application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
