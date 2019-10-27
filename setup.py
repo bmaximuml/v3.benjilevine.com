@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='benjilevine.com',
-    version='0.2',
+    version='1.0',
     long_description=__doc__,
     packages=find_packages(),
     include_package_data=True,
