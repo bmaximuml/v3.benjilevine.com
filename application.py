@@ -23,6 +23,7 @@ def create_app():
                                                      + ':'
                                                      + environ['BENJI_LEVINE_DB_PORT']
                                                      )
+    application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(application)
     return application
