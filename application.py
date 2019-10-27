@@ -7,7 +7,7 @@ from wtforms import Form, StringField, SubmitField, TextAreaField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, length
 
-from models import db, Skill
+from models import db, About, Skill
 
 
 def create_application():
@@ -67,6 +67,7 @@ class ContactForm(Form):
 @application.route('/', methods=['POST', 'GET'])
 def about():
     skills = Skill.query.all()
+    about = About.query.order_by(About.priority).all()
 
     form = ContactForm(request.form)
     if request.method == 'POST':
@@ -79,6 +80,7 @@ def about():
 
     return render_template('index.html',
                            year=datetime.now().year,
+                           about=about,
                            skills=skills,
                            form=form
                            )
