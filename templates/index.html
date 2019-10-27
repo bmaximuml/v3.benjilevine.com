@@ -59,9 +59,17 @@
             <div class="columns">
                 <div class="column nested">
                     {% set ns = namespace(long_cols=0,num_in_col=0) %}
-                    {% set num_cols = 6 %}
                     {% for skill in skills if skill.name %}
-                        {% set remainder = loop.length % num_cols %}
+                        {% if loop.length < 15 %}
+                            {% set num_cols = 7 %}
+                        {% else %}
+                            {% set num_cols = 8 %}
+                        {% endif %}
+                        {% if loop.length % num_cols > 0 %}
+                            {% set remainder = loop.length % num_cols %}
+                        {% else %}
+                            {% set remainder = num_cols %}
+                        {% endif %}
                         {% if ns.long_cols < remainder %}
                             {% set num_rows = (loop.length / num_cols)|round(0, 'ceil') %}
                         {% else %}
