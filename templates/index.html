@@ -9,7 +9,7 @@
             <div class="columns">
                 <div class="column is-vertical is-two-thirds">
                     {% for item in about %}
-                        <div class="notification is-{{ loop.cycle('light', 'info') }}">
+                        <div    class="notification is-{{ loop.cycle('light', 'info') }}">
                             {{ item.content|safe }}
                         </div>
                     {% endfor %}
@@ -32,33 +32,36 @@
             <div class="notification is-dark is-paddingless">
                 <div class="tabs is-boxed is-marginless">
                     <ul id="projects-tabs">
-                        <li id='final' class="is-active">
-                            <a>
-                                <span>Final Year Project</span>
-                            </a>
-                        </li>
-                        <li id='choys'>
-                            <a>
-                                <span>Choys</span>
-                            </a>
-                        </li>
-                        <li id='website'>
-                            <a>
-                                <span>benjilevine.com</span>
-                            </a>
-                        </li>
+                        {% for project in projects %}
+                            {% if loop.first %}
+                                <li id='{{ project.name|replace(' ', '') }}' class="is-active">
+                            {% else %}
+                                <li id='{{ project.name|replace(' ', '') }}'>
+                            {% endif %}
+                                <a>
+                                    <span>{{ project.name }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div id="projects-content">
-                    <div id='final-content' class="notification is-light is-radiusless is-marginless">
-                        final
-                    </div>
-                    <div id='choys-content' class="notification is-light is-radiusless is-marginless is-hidden">
-                        choys
-                    </div>
-                    <div id='website-content' class="notification is-light is-radiusless is-marginless is-hidden">
-                        website
-                    </div>
+                    {% for project in projects %}
+                        {% if loop.first %}
+                            <div id='{{ project.name|replace(' ', '') }}-content' class="notification is-light is-radiusless is-marginless">
+                        {% else %}
+                            <div id='{{ project.name|replace(' ', '') }}-content' class="notification is-light is-radiusless is-marginless is-hidden">
+                        {% endif %}
+                            {% if project.tags|length %}
+                                <div class="tags">
+                                    {% for tag in project.tags %}
+                                        <span class="tag is-{{ tag.colour }}">{{ tag.name }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <p>{{ project.description }}</p>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

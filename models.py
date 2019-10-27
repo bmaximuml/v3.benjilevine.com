@@ -17,3 +17,36 @@ class Skill(db.Model):
 
     def __repr__(self):
         return f'<Skill {str(self.name)}>'
+
+
+tags = db.Table(
+    'tags',
+    db.Column(
+        'tag_name',
+        db.String(200),
+        db.ForeignKey('tag.name'),
+        primary_key=True
+    ),
+    db.Column(
+        'project_name',
+        db.String(200),
+        db.ForeignKey('project.name'),
+        primary_key=True
+    )
+)
+
+
+class Project(db.Model):
+    name = db.Column(db.String(200), primary_key=True, nullable=False)
+    description = db.Column(db.String(5000), nullable=False)
+    tags = db.relationship(
+        'Tag',
+        secondary=tags,
+        lazy='subquery',
+        backref=db.backref('projects', lazy=True)
+    )
+
+
+class Tag(db.Model):
+    name = db.Column(db.String(200), primary_key=True, nullable=False)
+    colour = db.Column(db.String(20), nullable=False)
