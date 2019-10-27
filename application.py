@@ -6,7 +6,7 @@ from os import environ
 from smtplib import SMTP_SSL
 from wtforms import Form, StringField, SubmitField, TextAreaField
 from wtforms.fields.html5 import EmailField
-from wtforms.validators import DataRequired, length
+from wtforms.validators import DataRequired, Email, length
 
 
 application = Flask(__name__)
@@ -22,7 +22,11 @@ class ContactForm(Form):
                            "maxlength": 200
                        })
     email = EmailField('Email Address',
-                       validators=[DataRequired(), length(max=200)],
+                       validators=[
+                           DataRequired(),
+                           Email(message="Invalid email address"),
+                           length(max=200)
+                       ],
                        render_kw={
                            "placeholder": "Email",
                            "class": "input",
