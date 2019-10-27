@@ -4,8 +4,10 @@
 
 .notification {
     margin: 0.75rem;
+    padding: 1rem;
 }
 
-div.column.nested {
-    padding: 0;
+.columns > .column > .notification {
+    margin-left: 0;
+    margin-right: 0;
 }
