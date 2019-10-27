@@ -68,7 +68,7 @@ class ContactForm(Form):
 def about():
     skills = Skill.query.all()
     about_data = About.query.order_by(About.priority).all()
-    projects = Project.query.all()
+    projects = Project.query.order_by(Project.priority).all()
 
     form = ContactForm(request.form)
     if request.method == 'POST':

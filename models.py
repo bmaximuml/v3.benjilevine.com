@@ -39,6 +39,7 @@ tags = db.Table(
 class Project(db.Model):
     name = db.Column(db.String(200), primary_key=True, nullable=False)
     description = db.Column(db.String(5000), nullable=False)
+    priority = db.Column(db.Integer, nullable=False)
     tags = db.relationship(
         'Tag',
         secondary=tags,
