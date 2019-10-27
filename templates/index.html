@@ -9,7 +9,7 @@
             <div class="columns">
                 <div class="column is-vertical is-two-thirds">
                     {% for item in about %}
-                        <div    class="notification is-{{ loop.cycle('light', 'info') }}">
+                        <div class="notification is-{{ loop.cycle('light', 'info') }}">
                             {{ item.content|safe }}
                         </div>
                     {% endfor %}
