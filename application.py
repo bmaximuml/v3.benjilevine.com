@@ -1,20 +1,19 @@
 from datetime import datetime
 from email.message import EmailMessage
-from flask import Flask, flash, render_template, redirect, url_for
-from flask_wtf import FlaskForm
+from flask import Flask, flash, render_template, request, redirect, url_for
 from json import loads
 from os import environ
 from smtplib import SMTP_SSL
-from wtforms.fields import StringField, SubmitField, TextAreaField
+from wtforms import Form, StringField, SubmitField, TextAreaField
 from wtforms.fields.html5 import EmailField
-from wtforms.validators import DataRequired, length
+from wtforms.validators import DataRequired, Email, length
 
 
 application = Flask(__name__)
 application.secret_key = environ['FLASK_SECRET_KEY']
 
 
-class ContactForm(FlaskForm):
+class ContactForm(Form):
     name = StringField('Name',
                        validators=[DataRequired(), length(max=200)],
                        render_kw={
@@ -23,12 +22,16 @@ class ContactForm(FlaskForm):
                            "maxlength": 200
                        })
     email = EmailField('Email Address',
-                       validators=[DataRequired(), length(max=200)],
+                       validators=[
+                           DataRequired(),
+                           Email(message="Invalid email address"),
+                           length(max=200)
+                       ],
                        render_kw={
                            "placeholder": "Email",
                            "class": "input",
                            "maxlength": 200
-                        })
+                       })
     message = TextAreaField('Message',
                             validators=[DataRequired(), length(max=5000)],
                             render_kw={
@@ -48,10 +51,13 @@ def about():
     with open('data/skills.json') as skills_f:
         skills = loads(skills_f.read())
 
-    form = ContactForm()
-    if form.validate_on_submit():
-        send_message(form.name.data, form.email.data, form.message.data)
-        flash('Message successfully sent!')
+    form = ContactForm(request.form)
+    if request.method == 'POST':
+        if form.validate():
+            send_message(form.name.data, form.email.data, form.message.data)
+            flash('Message successfully sent!')
+        else:
+            flash('Invalid data supplied, message not sent.')
         return redirect(url_for('about', _anchor='contact'))
 
     return render_template('index.html',
