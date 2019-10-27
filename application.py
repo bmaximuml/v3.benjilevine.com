@@ -52,9 +52,12 @@ def about():
         skills = loads(skills_f.read())
 
     form = ContactForm(request.form)
-    if request.method == 'POST' and form.validate():
-        send_message(form.name.data, form.email.data, form.message.data)
-        flash('Message successfully sent!')
+    if request.method == 'POST':
+        if form.validate():
+            send_message(form.name.data, form.email.data, form.message.data)
+            flash('Message successfully sent!')
+        else:
+            flash('Invalid data supplied, message not sent.')
         return redirect(url_for('about', _anchor='contact'))
 
     return render_template('index.html',
