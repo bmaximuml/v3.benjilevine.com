@@ -1,16 +1,34 @@
 from datetime import datetime
 from email.message import EmailMessage
 from flask import Flask, flash, render_template, request, redirect, url_for
-from json import loads
 from os import environ
 from smtplib import SMTP_SSL
 from wtforms import Form, StringField, SubmitField, TextAreaField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, length
 
+from models import db, Skill
 
-application = Flask(__name__)
-application.secret_key = environ['FLASK_SECRET_KEY']
+
+def create_application():
+    app = Flask(__name__)
+    app.secret_key = environ['FLASK_SECRET_KEY']
+    sqlalchemy_database_uri = (
+        'mysql+mysqlconnector://{}:{}@{}:{}/benjilevine.com'.format(
+            environ['BENJI_LEVINE_DB_USERNAME'],
+            environ['BENJI_LEVINE_DB_PASSWORD'],
+            environ['BENJI_LEVINE_DB_HOST'],
+            environ['BENJI_LEVINE_DB_PORT']
+        )
+    )
+    app.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    db.init_app(app)
+    return app
+
+
+application = create_application()
 
 
 class ContactForm(Form):
@@ -48,8 +66,7 @@ class ContactForm(Form):
 
 @application.route('/', methods=['POST', 'GET'])
 def about():
-    with open('data/skills.json') as skills_f:
-        skills = loads(skills_f.read())
+    skills = Skill.query.all()
 
     form = ContactForm(request.form)
     if request.method == 'POST':
@@ -62,7 +79,7 @@ def about():
 
     return render_template('index.html',
                            year=datetime.now().year,
-                           skills=skills['skills'],
+                           skills=skills,
                            form=form
                            )
 
