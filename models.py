@@ -1,9 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 
-from application import application
 
-
-db = SQLAlchemy(application)
+db = SQLAlchemy()
 
 
 class Skill(db.Model):
