@@ -14,17 +14,15 @@ from models import db, Skill
 def create_app():
     application = Flask(__name__)
     application.secret_key = environ['FLASK_SECRET_KEY']
-    application.config['SQLALCHEMY_DATABASE_URI'] = ('mysql+mysqlconnector://'
-                                                     + environ['BENJI_LEVINE_DB_USERNAME']
-                                                     + ':'
-                                                     + environ['BENJI_LEVINE_DB_PASSWORD']
-                                                     + '@'
-                                                     + environ['BENJI_LEVINE_DB_HOST']
-                                                     + ':'
-                                                     + environ['BENJI_LEVINE_DB_PORT']
-                                                     + '/'
-                                                     + 'benjilevine.com'
-                                                     )
+    sqlalchemy_database_uri = (
+        'mysql+mysqlconnector://{}:{}@{}:{}/benjilevine.com'.format(
+            environ['BENJI_LEVINE_DB_USERNAME'],
+            environ['BENJI_LEVINE_DB_PASSWORD'],
+            environ['BENJI_LEVINE_DB_HOST'],
+            environ['BENJI_LEVINE_DB_PORT']
+        )
+    )
+    application.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
     application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(application)
