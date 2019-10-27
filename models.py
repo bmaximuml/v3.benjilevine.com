@@ -1,0 +1,15 @@
+from flask_sqlalchemy import SQLAlchemy
+
+from application import application
+
+
+db = SQLAlchemy(application)
+
+
+class Skill(db.Model):
+    name = db.Column(db.String(200), primary_key=True, nullable=False)
+    url = db.Column(db.String(500), nullable=True)
+    img = db.Column(db.String(200), nullable=True)
+
+    def __repr__(self):
+        return f'<Skill {str(self.name)}>'
