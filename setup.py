@@ -10,6 +10,8 @@ setup(
     install_requires=[
         'datetime',
         'Flask',
+        'Flask-SQLAlchemy',
+        'mysql-connector-python',
         'WTForms'
     ],
     author='Benji Levine',

@@ -11,6 +11,15 @@ from wtforms.validators import DataRequired, Email, length
 
 application = Flask(__name__)
 application.secret_key = environ['FLASK_SECRET_KEY']
+application.config['SQLALCHEMY_DATABASE_URI'] = ('mysql+mysqldb://'
+                                                 + environ['BENJI_LEVINE_DB_USERNAME']
+                                                 + ':'
+                                                 + environ['BENJI_LEVINE_DB_PASSWORD']
+                                                 + '@'
+                                                 + environ['BENJI_LEVINE_DB_HOST']
+                                                 + ':'
+                                                 + environ['BENJI_LEVINE_DB_PORT']
+                                                 )
 
 
 class ContactForm(Form):
