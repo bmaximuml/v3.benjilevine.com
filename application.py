@@ -1,7 +1,6 @@
 from datetime import datetime
 from email.message import EmailMessage
 from flask import Flask, flash, render_template, request, redirect, url_for
-from json import loads
 from os import environ
 from smtplib import SMTP_SSL
 from wtforms import Form, StringField, SubmitField, TextAreaField
@@ -67,8 +66,7 @@ class ContactForm(Form):
 
 @application.route('/', methods=['POST', 'GET'])
 def about():
-    with open('data/skills.json') as skills_f:
-        skills = loads(skills_f.read())
+    skills = Skill.query.all()
 
     form = ContactForm(request.form)
     if request.method == 'POST':
@@ -81,7 +79,7 @@ def about():
 
     return render_template('index.html',
                            year=datetime.now().year,
-                           skills=skills['skills'],
+                           skills=skills,
                            form=form
                            )
 
