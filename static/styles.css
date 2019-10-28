@@ -16,6 +16,11 @@ html {
     margin-right: 0;
 }
 
+a.button {
+    white-space: unset;
+    height: auto;
+}
+
 div.tags > a {
     margin-right: 0.5rem;
 }
