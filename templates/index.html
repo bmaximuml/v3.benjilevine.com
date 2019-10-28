@@ -80,7 +80,7 @@
     <div class="hero is-dark">
         <div class="hero-body">
             <h1 class="title">Skills</h1>
-            <div class="columns">
+            <div class="columns is-hidden-touch">
                 <div class="column">
                     {% set ns = namespace(long_cols=0,num_in_col=0) %}
                     {% for skill in skills if skill.name %}
@@ -124,6 +124,15 @@
                             </div>
                         {% endif %}
                     {% endfor %}
+            </div>
+            <div class="tags is-hidden-desktop">
+                {% for skill in skills if skill.name %}
+                    <a href="{{ skill.url }}">
+                        <span class="tag is-info">
+                            {{ skill.name }}
+                        </span>
+                    </a>
+                {% endfor %}
             </div>
         </div>
     </div>
