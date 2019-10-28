@@ -54,3 +54,33 @@ class Project(db.Model):
 class Tag(db.Model):
     name = db.Column(db.String(200), primary_key=True, nullable=False)
     colour = db.Column(db.String(20), nullable=False)
+
+    def __eq__(self, other):
+        if other is None:
+            return False
+        return self.colour == other.colour
+
+    def __ne__(self, other):
+        if other is None:
+            return True
+        return self.colour != other.colour
+
+    def __lt__(self, other):
+        if other is None:
+            return False
+        return self.colour < other.colour
+
+    def __gt__(self, other):
+        if other is None:
+            return True
+        return self.colour > other.colour
+
+    def __le__(self, other):
+        if other is None:
+            return False
+        return self.colour <= other.colour
+
+    def __ge__(self, other):
+        if other is None:
+            return True
+        return self.colour >= other.colour
