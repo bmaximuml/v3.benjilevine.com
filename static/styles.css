@@ -25,6 +25,10 @@ div.tags > a {
     margin-right: 0.5rem;
 }
 
+div.columns.is-mobile > div.column.is-hidden-tablet > div.notification {
+    padding: 0.5rem;
+}
+
 div.navbar-brand {
     background-color: inherit;
     z-index: 20;
