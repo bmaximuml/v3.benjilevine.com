@@ -4,8 +4,20 @@
     <a id="about"></a>
     <div class="hero is-dark">
         <div class="hero-body">
-            <h1 class="title">About</h1>
-            
+
+            <div class="columns is-mobile is-vcentered">
+                <div class="column">
+                    <h1 class="title">About</h1>
+                </div>
+                <div class="column is-hidden-tablet">
+                    <div class="notification is-info is-marginless">
+                        <figure class="image is-square">
+                            <img src="{{ url_for('static', filename='assets/portrait.jpeg') }}" alt="Benji Levine portrait">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
             <div class="columns">
                 <div class="column is-vertical is-two-thirds">
                     {% for item in about|sort(attribute="priority") %}
@@ -14,7 +26,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="column is is-one-third has-text-centered">
+                <div class="column is is-one-third has-text-centered is-hidden-mobile">
                     <div class="notification is-info">
                         <figure class="image is-square">
                             <img src="{{ url_for('static', filename='assets/portrait.jpeg') }}" alt="Benji Levine portrait">
@@ -54,14 +66,19 @@
                         {% endif %}
                             {% if project.tags|length %}
                                 <div class="columns">
-                                    <div class="column is-four-fifths">
+                                    <div class="column is-hidden-tablet">
+                                        <span class="tag is-danger is-light">
+                                            {{ project.date }}
+                                        </span>
+                                    </div>
+                                    <div class="column is-two-thirds-tablet is-four-fifths-desktop">
                                         <div class="tags">
                                             {% for tag in project.tags|sort(attribute="colour") %}
                                                 <span class="tag is-{{ tag.colour }}">{{ tag.name }}</span>
                                             {% endfor %}
                                         </div>
                                     </div>
-                                    <div class="column is-one-fifth has-text-right">
+                                    <div class="column is-one-third-tablet is-one-fifth-desktop has-text-right-tablet is-hidden-mobile">
                                         <span class="tag is-danger is-light">
                                             {{ project.date }}
                                         </span>
@@ -80,7 +97,7 @@
     <div class="hero is-dark">
         <div class="hero-body">
             <h1 class="title">Skills</h1>
-            <div class="columns">
+            <div class="columns is-hidden-touch">
                 <div class="column">
                     {% set ns = namespace(long_cols=0,num_in_col=0) %}
                     {% for skill in skills if skill.name %}
@@ -114,7 +131,7 @@
                                 </div>
                             {% endif %}
                             <span class="has-text-centered has-text-dark">
-                                <a href="{{ skill.url }}">
+                                <a href="{{ skill.url }}" target="_blank" rel="noopener noreferrer">
                                     {{ skill.name }}
                                 </a>
                             </span>
@@ -125,6 +142,23 @@
                         {% endif %}
                     {% endfor %}
             </div>
+            <div class="tags is-hidden-desktop">
+                {% for skill in skills|sort(attribute="tag") if skill.name %}
+                    <a href="{{ skill.url }}" target="_blank" rel="noopener noreferrer">
+                    {% if skill.tag %}
+                        {% if skill.tag.colour == 'dark' %}
+                            <span class="tag is-light is-large">
+                        {% else %}
+                            <span class="tag is-{{ skill.tag.colour }} is-large">
+                        {% endif %}
+                    {% else %}
+                        <span class="tag is-black is-large">
+                    {% endif %}
+                        {{ skill.name }}
+                    </span>
+                    </a>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
@@ -133,13 +167,22 @@
         <div class="hero-body">
             <h1 class="title">CV</h1>
             <div class="columns">
-                <div class="column notification is-one-third is-light">
+                <div class="column notification is-one-third is-light is-hidden-mobile">
                     <div class="image is-square">
                         <img src="{{ url_for('static', filename='assets/Madrid.jpg') }}" alt="Benji Levine photo">
                     </div>
                 </div>
                 <div class="column notification is-light">
-                    <a class="button is-primary is-fullwidth is-large" href="{{ url_for('static', filename='assets/Benji_Levine_CV.pdf') }}"><strong>Download Benji's CV here</strong></a>
+                    <a class="button is-primary is-fullwidth is-large" href="{{ url_for('static', filename='assets/Benji_Levine_CV.pdf') }}">
+                        <strong>
+                            Download Benji's CV here
+                        </strong>
+                    </a>
+                </div>
+                <div class="column notification is-one-third is-light is-hidden-tablet">
+                    <div class="image is-square">
+                        <img src="{{ url_for('static', filename='assets/Madrid.jpg') }}" alt="Benji Levine photo">
+                    </div>
                 </div>
             </div>
         </div>
@@ -197,7 +240,7 @@
                             <span class="icon">
                                 <i class="fab fa-linkedin"></i>
                             </span>
-                            <span>
+                            <span class="is-size-6-mobile">
                                 LinkedIn
                             </span>
                         </a>
@@ -207,7 +250,7 @@
                             <span class="icon">
                                 <i class="fab fa-github"></i>
                             </span>
-                            <span>
+                            <span class="is-size-6-mobile">
                                 GitHub
                             </span>
                         </a>
@@ -218,7 +261,7 @@
                             <span class="icon">
                                 <i class="fas fa-envelope"></i>
                             </span>
-                            <span>
+                            <span class="is-size-6-mobile">
                                 benji@benjilevine.com
                             </span>
                         </a>
