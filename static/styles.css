@@ -15,3 +15,7 @@ html {
     margin-left: 0;
     margin-right: 0;
 }
+
+div.tags > a {
+    margin-right: 0.5rem;
+}

@@ -126,11 +126,19 @@
                     {% endfor %}
             </div>
             <div class="tags is-hidden-desktop">
-                {% for skill in skills if skill.name %}
+                {% for skill in skills|sort(attribute="tag") if skill.name %}
                     <a href="{{ skill.url }}" target="_blank" rel="noopener noreferrer">
-                        <span class="tag is-info">
-                            {{ skill.name }}
-                        </span>
+                    {% if skill.tag %}
+                        {% if skill.tag.colour == 'dark' %}
+                            <span class="tag is-light is-large">
+                        {% else %}
+                            <span class="tag is-{{ skill.tag.colour }} is-large">
+                        {% endif %}
+                    {% else %}
+                        <span class="tag is-black is-large">
+                    {% endif %}
+                        {{ skill.name }}
+                    </span>
                     </a>
                 {% endfor %}
             </div>
