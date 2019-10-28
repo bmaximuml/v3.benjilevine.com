@@ -11,9 +11,11 @@ class About(db.Model):
 
 
 class Skill(db.Model):
-    name = db.Column(db.String(200), primary_key=True, nullable=False)
+    name = db.Column(db.String(200), db.ForeignKey('tag.name'), primary_key=True, nullable=False)
     url = db.Column(db.String(500), nullable=True)
     img = db.Column(db.String(200), nullable=True)
+
+    tag = db.relationship("Tag", foreign_keys=name)
 
     def __repr__(self):
         return f'<Skill {str(self.name)}>'
