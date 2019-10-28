@@ -53,10 +53,19 @@
                             <div id='{{ project.name|replace(' ', '') }}-content' class="notification is-light is-radiusless is-marginless is-hidden">
                         {% endif %}
                             {% if project.tags|length %}
-                                <div class="tags">
-                                    {% for tag in project.tags|sort(attribute="colour") %}
-                                        <span class="tag is-{{ tag.colour }}">{{ tag.name }}</span>
-                                    {% endfor %}
+                                <div class="columns">
+                                <div class="column is-four-fifths">
+                                    <div class="tags">
+                                        {% for tag in project.tags|sort(attribute="colour") %}
+                                            <span class="tag is-{{ tag.colour }}">{{ tag.name }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="column is-one-fifth has-text-right">
+                                    <div class="tag is-danger is-light">
+                                    {{ project.date }}
+                                    </div>
+                                </div>
                                 </div>
                             {% endif %}
                             <p>{{ project.description|safe }}</p>
