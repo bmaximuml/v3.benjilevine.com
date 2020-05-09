@@ -11,8 +11,8 @@ from models import db, About, Project, Skill
 
 
 def create_application():
-    app = Flask(__name__)
-    app.secret_key = environ['FLASK_SECRET_KEY']
+    application = Flask(__name__)
+    application.secret_key = environ['FLASK_SECRET_KEY']
     sqlalchemy_database_uri = (
         'mysql+mysqlconnector://{}:{}@{}:{}/benjilevine.com'.format(
             environ['BENJI_LEVINE_DB_USERNAME'],
@@ -21,14 +21,14 @@ def create_application():
             environ['BENJI_LEVINE_DB_PORT']
         )
     )
-    app.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    application.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
+    application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    db.init_app(app)
-    return app
+    db.init_app(application)
+    return application
 
 
-application = create_application()
+app = create_application()
 
 
 class ContactForm(Form):
@@ -64,7 +64,7 @@ class ContactForm(Form):
                          })
 
 
-@application.route('/', methods=['POST', 'GET'])
+@app.route('/', methods=['POST', 'GET'])
 def about():
     skills = Skill.query.all()
     about_data = About.query.order_by(About.priority).all()
@@ -111,5 +111,5 @@ def send_message(name, email, message):
 
 
 if __name__ == '__main__':
-    application.debug = True
-    application.run()
+    app.debug = True
+    app.run()
