@@ -1,5 +1,6 @@
-DateTime==4.3
-Flask==1.1.1
-Flask-SQLAlchemy==2.4.1
-mysql-connector-python==8.0.18
-WTForms==2.2.1
+DateTime>=4.3
+Flask>=1.1.1
+Flask-SQLAlchemy>=2.4.1
+mysql-connector-python>=8.0.18
+WTForms>=2.2.1
+email-validator>=1.1.0
