@@ -1,13 +1,14 @@
 from datetime import datetime
-from email.message import EmailMessage
+#from email.message import EmailMessage
 from flask import Flask, flash, render_template, request, redirect, url_for
 from os import environ
 from smtplib import SMTP_SSL
+from ssl import create_default_context
 from wtforms import Form, StringField, SubmitField, TextAreaField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, length
 
-from .models import db, Skill, Project, About
+from benjilevinecom.models import db, Skill, Project, About
 
 
 def create_application():
@@ -89,25 +90,47 @@ def about():
 
 
 def send_message(name, email, message):
-    msg = EmailMessage()
-    msg.set_content(message)
-    msg['Subject'] = name + ' - benjilevine.com Contact Form'
-    msg['From'] = email
-    msg['To'] = 'contactform@benjilevine.com'
+    send_to = 'contactform@benjilevine.com'
 
-    sender = SMTP_SSL(
+    #msg = EmailMessage()
+    #msg.set_content(message)
+    #msg['Subject'] = name + ' - benjilevine.com Contact Form'
+    #msg['From'] = email
+    #msg['To'] = send_to
+
+    #sender = SMTP_SSL(
+    #    environ['BENJI_LEVINE_SMTP_HOST'],
+    #    environ['BENJI_LEVINE_SMTP_PORT'],
+    #    'benjilevine.com'
+    #)
+
+    #sender.login(
+    #    environ['BENJI_LEVINE_SMTP_USERNAME'],
+    #    environ['BENJI_LEVINE_SMTP_PASSWORD']
+    #)
+
+    #sender.send_message(msg)
+    #sender.quit()
+
+    context = create_default_context()
+    with SMTP_SSL(
         environ['BENJI_LEVINE_SMTP_HOST'],
         environ['BENJI_LEVINE_SMTP_PORT'],
-        'benjilevine.com'
-    )
+        context=context
+        ) as server:
+        
+        server.login(
+            environ['BENJI_LEVINE_SMTP_USERNAME'],
+            environ['BENJI_LEVINE_SMTP_PASSWORD']
+        )
+        server.sendmail(
+            email,
+            send_to,
+            message
+        )
 
-    sender.login(
-        environ['BENJI_LEVINE_SMTP_USERNAME'],
-        environ['BENJI_LEVINE_SMTP_PASSWORD']
-    )
 
-    sender.send_message(msg)
-    sender.quit()
+
 
 
 if __name__ == '__main__':
