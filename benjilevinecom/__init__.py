@@ -1,8 +1,8 @@
 from datetime import datetime
-#from email.message import EmailMessage
+from email.message import EmailMessage
 from flask import Flask, flash, render_template, request, redirect, url_for
 from os import environ
-from smtplib import SMTP_SSL
+from smtplib import SMTP_SSL, SMTP
 from ssl import create_default_context
 from wtforms import Form, StringField, SubmitField, TextAreaField
 from wtforms.fields.html5 import EmailField
@@ -92,45 +92,25 @@ def about():
 def send_message(name, email, message):
     send_to = 'contactform@benjilevine.com'
 
-    #msg = EmailMessage()
-    #msg.set_content(message)
-    #msg['Subject'] = name + ' - benjilevine.com Contact Form'
-    #msg['From'] = email
-    #msg['To'] = send_to
-
-    #sender = SMTP_SSL(
-    #    environ['BENJI_LEVINE_SMTP_HOST'],
-    #    environ['BENJI_LEVINE_SMTP_PORT'],
-    #    'benjilevine.com'
-    #)
-
-    #sender.login(
-    #    environ['BENJI_LEVINE_SMTP_USERNAME'],
-    #    environ['BENJI_LEVINE_SMTP_PASSWORD']
-    #)
-
-    #sender.send_message(msg)
-    #sender.quit()
-
-    context = create_default_context()
-    with SMTP_SSL(
+    s = SMTP_SSL(
         environ['BENJI_LEVINE_SMTP_HOST'],
-        environ['BENJI_LEVINE_SMTP_PORT'],
-        context=context
-        ) as server:
-        
-        server.login(
-            environ['BENJI_LEVINE_SMTP_USERNAME'],
-            environ['BENJI_LEVINE_SMTP_PASSWORD']
-        )
-        server.sendmail(
-            email,
-            send_to,
-            message
-        )
+        environ['BENJI_LEVINE_SMTP_PORT']
+    )
+    
+    s.login(
+        environ['BENJI_LEVINE_SMTP_USERNAME'],
+        environ['BENJI_LEVINE_SMTP_PASSWORD']
+    )
 
+    msg = EmailMessage()
+    msg.set_content(message)
+    msg['Subject'] = name + ' - benjilevine.com Contact Form'
+    msg['From'] = send_to
+    msg['To'] = send_to
+    msg['Reply-To'] = name + ' <' + email + '>'
 
-
+    s.send_message(msg)
+    s.quit()
 
 
 if __name__ == '__main__':
