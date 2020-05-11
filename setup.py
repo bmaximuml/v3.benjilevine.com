@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='benjilevine.com',
+    name='benjilevinecom',
     version='1.1',
     long_description=__doc__,
     packages=find_packages(),
@@ -12,7 +12,8 @@ setup(
         'Flask',
         'Flask-SQLAlchemy',
         'mysql-connector-python',
-        'WTForms'
+        'WTForms',
+        'email-validator'
     ],
     author='Benji Levine',
     author_email='benji@benjilevine.com',
