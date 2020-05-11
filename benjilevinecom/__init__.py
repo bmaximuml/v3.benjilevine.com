@@ -7,7 +7,7 @@ from wtforms import Form, StringField, SubmitField, TextAreaField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, length
 
-from models import db, About, Project, Skill
+from .models import db, Skill, Project, About
 
 
 def create_application():
