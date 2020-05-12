@@ -2,8 +2,7 @@ from datetime import datetime
 from email.message import EmailMessage
 from flask import Flask, flash, render_template, request, redirect, url_for
 from os import environ
-from smtplib import SMTP_SSL, SMTP
-from ssl import create_default_context
+from smtplib import SMTP_SSL, SMTPRecipientsRefused
 from wtforms import Form, StringField, SubmitField, TextAreaField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, length
@@ -74,8 +73,25 @@ def about():
     form = ContactForm(request.form)
     if request.method == 'POST':
         if form.validate():
-            send_message(form.name.data, form.email.data, form.message.data)
-            flash('Message successfully sent!')
+            try:
+                send_message(form.name.data, form.email.data, form.message.data)
+                flash('Message successfully sent!')
+            except SMTPRecipientsRefused as e:
+                flash('Invalid email address entered. Message not sent.')
+                email_bug_report(
+                    form.name.data,
+                    form.email.data,
+                    form.message.data,
+                    e
+                )
+            except Exception as e:
+                flash('Unknown error occurred. Message not sent.')
+                email_bug_report(
+                    form.name.data,
+                    form.email.data,
+                    form.message.data,
+                    e
+                )
         else:
             flash('Invalid data supplied, message not sent.')
         return redirect(url_for('about', _anchor='contact'))
@@ -89,14 +105,14 @@ def about():
                            )
 
 
-def send_message(name, email, message):
+def send_message(name, email, message, subject=None):
     send_to = 'contactform@benjilevine.com'
 
     s = SMTP_SSL(
         environ['BENJI_LEVINE_SMTP_HOST'],
         environ['BENJI_LEVINE_SMTP_PORT']
     )
-    
+
     s.login(
         environ['BENJI_LEVINE_SMTP_USERNAME'],
         environ['BENJI_LEVINE_SMTP_PASSWORD']
@@ -104,13 +120,28 @@ def send_message(name, email, message):
 
     msg = EmailMessage()
     msg.set_content(message)
-    msg['Subject'] = name + ' - benjilevine.com Contact Form'
-    msg['From'] = send_to
+    msg['Subject'] = f'{name} - benjilevine.com Contact Form' if subject is None else subject
+    #msg['From'] = send_to
+    #msg['From'] = name + ' <' + email + '>'
+    msg['From'] = email
     msg['To'] = send_to
-    msg['Reply-To'] = name + ' <' + email + '>'
+#    msg['Reply-To'] = name + ' <' + email + '>'
 
     s.send_message(msg)
     s.quit()
+
+
+def email_bug_report(name, email, message, error):
+    e_from = 'website@benjilevine.com'
+    subject = 'Bug Report - benjilevine.com'
+    message = (
+        f'Name: {name}\n' +
+        f'From: {email}\n' +
+        f'Message: {message}\n' +
+        f'Error: {error}'
+    )
+
+    send_message('Bug Report', e_from, message, subject=subject)
 
 
 if __name__ == '__main__':
