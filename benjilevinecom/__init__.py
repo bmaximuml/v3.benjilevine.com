@@ -73,25 +73,29 @@ def about():
     form = ContactForm(request.form)
     if request.method == 'POST':
         if form.validate():
-            try:
-                send_message(form.name.data, form.email.data, form.message.data)
-                flash('Message successfully sent!')
-            except SMTPRecipientsRefused as e:
-                flash('Invalid email address entered. Message not sent.')
-                email_bug_report(
-                    form.name.data,
-                    form.email.data,
-                    form.message.data,
-                    e
-                )
-            except Exception as e:
-                flash('Unknown error occurred. Message not sent.')
-                email_bug_report(
-                    form.name.data,
-                    form.email.data,
-                    form.message.data,
-                    e
-                )
+            print(form.g-recaptcha-response.data)
+            if form.g-recaptcha-response.data > 0.4:
+                try:
+                    send_message(form.name.data, form.email.data, form.message.data)
+                    flash('Message successfully sent!')
+                except SMTPRecipientsRefused as e:
+                    flash('Invalid email address entered. Message not sent.')
+                    email_bug_report(
+                        form.name.data,
+                        form.email.data,
+                        form.message.data,
+                        e
+                    )
+                except Exception as e:
+                    flash('Unknown error occurred. Message not sent.')
+                    email_bug_report(
+                        form.name.data,
+                        form.email.data,
+                        form.message.data,
+                        e
+                    )
+            else:
+                flash('Bot suspected. Message not sent.')
         else:
             flash('Invalid data supplied, message not sent.')
         return redirect(url_for('about', _anchor='contact'))
