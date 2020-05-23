@@ -13,7 +13,8 @@ setup(
         'Flask-SQLAlchemy',
         'mysql-connector-python',
         'WTForms',
-        'email-validator'
+        'email-validator',
+        'flask-recaptcha'
     ],
     author='Benji Levine',
     author_email='benji@benjilevine.com',
