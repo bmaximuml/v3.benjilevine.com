@@ -25,8 +25,8 @@ def create_application():
     application.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
     application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    application.config['RECAPTCHA_SITE_KEY'] = "6LccavsUAAAAALU3A0-Z7Q6YquHvk67gm4Uobwzc"
-    application.config['RECAPTCHA_SECRET_KEY'] = "6LccavsUAAAAAMrQsvYaOoOVUzFBmAPlhdxy655_"
+    application.config['RECAPTCHA_SITE_KEY'] = environ['BL_RECAPTCHA_SITE_KEY']
+    application.config['RECAPTCHA_SECRET_KEY'] = environ['BL_RECAPTCHA_SECRET_KEY']
 
     db.init_app(application)
     return application
