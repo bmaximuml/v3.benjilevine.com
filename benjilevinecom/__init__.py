@@ -1,6 +1,7 @@
 from datetime import datetime
 from email.message import EmailMessage
 from flask import Flask, flash, render_template, request, redirect, url_for
+from flask_recaptcha import ReCaptcha
 from os import environ
 from smtplib import SMTP_SSL, SMTPRecipientsRefused
 from wtforms import Form, StringField, SubmitField, TextAreaField
@@ -24,11 +25,15 @@ def create_application():
     application.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
     application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+    application.config['RECAPTCHA_SITE_KEY'] = "6LccavsUAAAAALU3A0-Z7Q6YquHvk67gm4Uobwzc"
+    application.config['RECAPTCHA_SECRET_KEY'] = "6LccavsUAAAAAMrQsvYaOoOVUzFBmAPlhdxy655_"
+
     db.init_app(application)
     return application
 
 
 app = create_application()
+recaptcha = ReCaptcha(app=app)
 
 
 class ContactForm(Form):
@@ -72,32 +77,34 @@ def about():
 
     form = ContactForm(request.form)
     if request.method == 'POST':
-        if form.validate():
-            print(form.g-recaptcha-response.data)
-            if form.g-recaptcha-response.data > 0.4:
-                try:
-                    send_message(form.name.data, form.email.data, form.message.data)
-                    flash('Message successfully sent!')
-                except SMTPRecipientsRefused as e:
-                    flash('Invalid email address entered. Message not sent.')
-                    email_bug_report(
-                        form.name.data,
-                        form.email.data,
-                        form.message.data,
-                        e
-                    )
-                except Exception as e:
-                    flash('Unknown error occurred. Message not sent.')
-                    email_bug_report(
-                        form.name.data,
-                        form.email.data,
-                        form.message.data,
-                        e
-                    )
-            else:
-                flash('Bot suspected. Message not sent.')
-        else:
+        if form.validate() and recaptcha.verify():
+            try:
+                send_message(form.name.data, form.email.data, form.message.data)
+                flash('Message successfully sent!')
+            except SMTPRecipientsRefused as e:
+                flash('Invalid email address entered. Message not sent.')
+                email_bug_report(
+                    form.name.data,
+                    form.email.data,
+                    form.message.data,
+                    e
+                )
+            except Exception as e:
+                flash('Unknown error occurred. Message not sent.')
+                email_bug_report(
+                    form.name.data,
+                    form.email.data,
+                    form.message.data,
+                    e
+                )
+        elif not form.validate():
             flash('Invalid data supplied, message not sent.')
+        elif not recaptcha.verify():
+            flash('Bot suspected, message not sent.')
+        else:
+            # flash(str(form.errors))
+            # This condition should never be reached
+            flash('Error occurred, message not sent.')
         return redirect(url_for('about', _anchor='contact'))
 
     return render_template('index.html',
