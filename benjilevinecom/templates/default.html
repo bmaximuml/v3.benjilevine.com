@@ -2,13 +2,7 @@
 <html lang="en-gb" class="has-navbar-fixed-top">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        {% if title is defined %}
-            {{ title }}
-        {% else %}
-            Benji Levine
-        {% endif %}
-    </title>
+    <title>{{ title }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bulma/css/bulma.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
@@ -31,11 +25,11 @@
     {% block nav %}
         <div class="navbar-brand">
             <a class="navbar-item" href="/">
-                <img src="{{ url_for('static', filename='assets/logo.png') }}"
-                     alt="Benji Levine logo">
+                <img src="{{ url_for('static', filename=logo) }}"
+                     alt="{{ title }} logo">
             </a>
             <a class="navbar-item" href="/">
-                <strong>Benji Levine</strong>
+                <strong>{{ title }}</strong>
             </a>
 
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main_navbar">
@@ -72,7 +66,7 @@
 <footer class="footer is-link hero is-paddingless">
     <div class="content has-text-centered hero-body">
         <p>
-            <strong class="has-text-light">Benji Levine</strong> &#169; {{ year }}
+            <strong class="has-text-light">{{ title }}</strong> &#169; {{ year }}
         </p>
     </div>
 </footer>

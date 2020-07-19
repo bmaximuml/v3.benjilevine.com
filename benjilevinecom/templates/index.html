@@ -12,7 +12,7 @@
                 <div class="column is-hidden-tablet">
                     <div class="notification is-info is-marginless">
                         <figure class="image is-square">
-                            <img src="{{ url_for('static', filename='assets/portrait.jpeg') }}" alt="Benji Levine portrait">
+                            <img src="{{ url_for('static', filename=main_photo) }}" alt="{{ title }} portrait">
                         </figure>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                 <div class="column is is-one-third has-text-centered is-hidden-mobile">
                     <div class="notification is-info">
                         <figure class="image is-square">
-                            <img src="{{ url_for('static', filename='assets/portrait.jpeg') }}" alt="Benji Levine portrait">
+                            <img src="{{ url_for('static', filename=main_photo) }}" alt="{{ title }} portrait">
                         </figure>
                     </div>
                 </div>
@@ -169,19 +169,19 @@
             <div class="columns">
                 <div class="column notification is-one-third is-light is-hidden-mobile">
                     <div class="image is-square">
-                        <img src="{{ url_for('static', filename='assets/Madrid.jpg') }}" alt="Benji Levine photo">
+                        <img src="{{ url_for('static', filename=secondary_photo) }}" alt="{{ title }} photo">
                     </div>
                 </div>
                 <div class="column notification is-light">
-                    <a class="button is-primary is-fullwidth is-large" href="{{ url_for('static', filename='assets/Benji_Levine_CV.pdf') }}">
+                    <a class="button is-primary is-fullwidth is-large" href="{{ url_for('static', filename=cv_file) }}">
                         <strong>
-                            Download Benji's CV here
+                            Download {{ fname }}'s CV here
                         </strong>
                     </a>
                 </div>
                 <div class="column notification is-one-third is-light is-hidden-tablet">
                     <div class="image is-square">
-                        <img src="{{ url_for('static', filename='assets/Madrid.jpg') }}" alt="Benji Levine photo">
+                        <img src="{{ url_for('static', filename=secondary_photo) }}" alt="{{ title }} photo">
                     </div>
                 </div>
             </div>
@@ -241,7 +241,7 @@
 
                 <div class="column notification is-light">
                     <div class="buttons">
-                        <a class="button is-medium is-fullwidth is-dark" href="https://www.linkedin.com/in/benjilevine/">
+                        <a class="button is-medium is-fullwidth is-dark" href="{{ linkedin }}">
                             <span class="icon">
                                 <i class="fab fa-linkedin"></i>
                             </span>
@@ -251,7 +251,7 @@
                         </a>
                     </div>
                     <div class="buttons">
-                        <a class="button is-medium is-fullwidth" href="https://github.com/benjilev08/">
+                        <a class="button is-medium is-fullwidth" href="{{ github }}">
                             <span class="icon">
                                 <i class="fab fa-github"></i>
                             </span>
@@ -262,12 +262,12 @@
 
                     </div>
                     <div class="buttons">
-                        <a class="button is-medium is-fullwidth is-dark" href="mailto:benji@benjilevine.com">
+                        <a class="button is-medium is-fullwidth is-dark" href="{{ email }}">
                             <span class="icon">
                                 <i class="fas fa-envelope"></i>
                             </span>
                             <span class="is-size-6-mobile">
-                                benji@benjilevine.com
+                                {{ email }}
                             </span>
                         </a>
                     </div>
