@@ -36,9 +36,9 @@ app = create_application()
 recaptcha = ReCaptcha(app=app)
 
 info = {
-    'title' : 'Benji Levine',
-    'fname' : 'Benji',
-    'email' : 'benji@benjilevine.com',
+    'title' : 'Max Levine',
+    'fname' : 'Max',
+    'email' : 'max@maxlevine.co.uk',
     'linkedin' : 'https://www.linkedin.com/in/benjilevine/',
     'github' : 'https://github.com/benjilev08',
     'cv_file' : 'assets/Benji_Levine_CV.pdf',
