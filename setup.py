@@ -12,6 +12,7 @@ setup(
         'Flask',
         'Flask-SQLAlchemy',
         'mysql-connector-python',
+        'requests',
         'WTForms',
         'email-validator',
     ],
