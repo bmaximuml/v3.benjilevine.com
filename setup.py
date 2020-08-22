@@ -14,7 +14,6 @@ setup(
         'mysql-connector-python',
         'WTForms',
         'email-validator',
-        'flask-recaptcha'
     ],
     author='Benji Levine',
     author_email='benji@benjilevine.com',
