@@ -1,10 +1,10 @@
 from datetime import datetime
 from email.message import EmailMessage
 from flask import Flask, flash, render_template, request, redirect, url_for
-from flask_recaptcha import ReCaptcha
 from os import environ
+from requests import post
 from smtplib import SMTP_SSL, SMTPRecipientsRefused
-from wtforms import Form, StringField, SubmitField, TextAreaField
+from wtforms import Field, Form, StringField, SubmitField, TextAreaField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, length
 
@@ -25,15 +25,15 @@ def create_application():
     application.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
     application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    application.config['RECAPTCHA_SITE_KEY'] = environ['BL_RECAPTCHA_SITE_KEY']
-    application.config['RECAPTCHA_SECRET_KEY'] = environ['BL_RECAPTCHA_SECRET_KEY']
+    application.config['CAPTCHA_SITE_KEY'] = environ['BL_CAPTCHA_SITE_KEY']
+    application.config['CAPTCHA_SECRET_KEY'] = environ['BL_CAPTCHA_SECRET_KEY']
+    application.config['CAPTCHA_VERIFY_URL'] = environ['BL_CAPTCHA_VERIFY_URL']
 
     db.init_app(application)
     return application
 
 
 app = create_application()
-recaptcha = ReCaptcha(app=app)
 
 info = {
     'title' : 'Max Levine',
@@ -74,6 +74,11 @@ class ContactForm(Form):
                                 "rows": 5,
                                 "maxlength": 5000
                             })
+    captcha = Field('hCaptcha',
+                    render_kw={
+                        "class": "h-captcha",
+                        "data-sitekey": app.config['CAPTCHA_SITE_KEY'],
+                    })
     submit = SubmitField('Send',
                          render_kw={
                              "class": "button is-link"
@@ -88,34 +93,38 @@ def about():
 
     form = ContactForm(request.form)
     if request.method == 'POST':
-        if form.validate() and recaptcha.verify():
-            try:
-                send_message(form.name.data, form.email.data, form.message.data)
-                flash('Message successfully sent!')
-            except SMTPRecipientsRefused as e:
-                flash('Invalid email address entered. Message not sent.')
-                email_bug_report(
-                    form.name.data,
-                    form.email.data,
-                    form.message.data,
-                    e
-                )
-            except Exception as e:
-                flash('Unknown error occurred. Message not sent.')
-                email_bug_report(
-                    form.name.data,
-                    form.email.data,
-                    form.message.data,
-                    e
-                )
-        elif not form.validate():
-            flash('Invalid data supplied, message not sent.')
-        elif not recaptcha.verify():
-            flash('Bot suspected, message not sent.')
+        if form.validate():
+            
+            # Verify hCaptcha
+            token = form.captcha.data
+            data = { 'secret': app.config['CAPTCHA_SECRET_KEY'], 'response': token }
+            hcaptcha_check = post(app.config['CAPTCHA_VERIFY_URL'], data=data)
+            captcha_success = hcaptcha_check.text['success']
+
+            if captcha_success:
+                try:
+                    send_message(form.name.data, form.email.data, form.message.data)
+                    flash('Message successfully sent!')
+                except SMTPRecipientsRefused as e:
+                    flash('Invalid email address entered. Message not sent.')
+                    email_bug_report(
+                        form.name.data,
+                        form.email.data,
+                        form.message.data,
+                        e
+                    )
+                except Exception as e:
+                    flash('Unknown error occurred. Message not sent.')
+                    email_bug_report(
+                        form.name.data,
+                        form.email.data,
+                        form.message.data,
+                        e
+                    )
+            else:
+                flash('Bot suspected, message not sent.')
         else:
-            # flash(str(form.errors))
-            # This condition should never be reached
-            flash('Error occurred, message not sent.')
+            flash('Invalid data supplied, message not sent.')            
         return redirect(url_for('about', _anchor='contact'))
 
     return render_template('index.html',
