@@ -74,11 +74,6 @@ class ContactForm(Form):
                                 "rows": 5,
                                 "maxlength": 5000
                             })
-    captcha = Field('hCaptcha',
-                    render_kw={
-                        "class": "h-captcha",
-                        "data-sitekey": app.config['CAPTCHA_SITE_KEY'],
-                    })
     submit = SubmitField('Send',
                          render_kw={
                              "class": "button is-link"
@@ -133,6 +128,7 @@ def about():
                            projects=projects,
                            skills=skills,
                            form=form,
+                           hcaptcha_sitekey=app.config['CAPTCHA_SITE_KEY'],
                            **info
                            )
 
