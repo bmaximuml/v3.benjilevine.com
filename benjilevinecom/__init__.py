@@ -1,6 +1,7 @@
 from datetime import datetime
 from email.message import EmailMessage
 from flask import Flask, flash, render_template, request, redirect, url_for
+from flask_xcaptcha import XCaptcha
 from os import environ
 from requests import post
 from smtplib import SMTP_SSL, SMTPRecipientsRefused
@@ -25,15 +26,20 @@ def create_application():
     application.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
     application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    application.config['CAPTCHA_SITE_KEY'] = environ['BL_CAPTCHA_SITE_KEY']
-    application.config['CAPTCHA_SECRET_KEY'] = environ['BL_CAPTCHA_SECRET_KEY']
-    application.config['CAPTCHA_VERIFY_URL'] = environ['BL_CAPTCHA_VERIFY_URL']
+    application.config.update(
+        XCAPTCHA_SITE_KEY=environ['BL_CAPTCHA_SITE_KEY'],
+        XCAPTCHA_SECRET_KEY=environ['BL_CAPTCHA_SECRET_KEY'],
+        XCAPTCHA_VERIFY_URL=environ['BL_CAPTCHA_VERIFY_URL'],
+        XCAPTCHA_API_URL=environ['BL_CAPTCHA_API_URL'],
+        XCAPTCHA_DIV_CLASS=environ['BL_CAPTCHA_DIV_CLASS']
+    )
 
     db.init_app(application)
     return application
 
 
 app = create_application()
+xcaptcha = XCaptcha(app=app)
 
 info = {
     'title' : 'Max Levine',
@@ -88,38 +94,32 @@ def about():
 
     form = ContactForm(request.form)
     if request.method == 'POST':
-        if form.validate():
-            
-            # Verify hCaptcha
-            token = form.captcha.data
-            data = { 'secret': app.config['CAPTCHA_SECRET_KEY'], 'response': token }
-            hcaptcha_check = post(app.config['CAPTCHA_VERIFY_URL'], data=data)
-            captcha_success = hcaptcha_check.text['success']
-
-            if captcha_success:
-                try:
-                    send_message(form.name.data, form.email.data, form.message.data)
-                    flash('Message successfully sent!')
-                except SMTPRecipientsRefused as e:
-                    flash('Invalid email address entered. Message not sent.')
-                    email_bug_report(
-                        form.name.data,
-                        form.email.data,
-                        form.message.data,
-                        e
-                    )
-                except Exception as e:
-                    flash('Unknown error occurred. Message not sent.')
-                    email_bug_report(
-                        form.name.data,
-                        form.email.data,
-                        form.message.data,
-                        e
-                    )
-            else:
-                flash('Bot suspected, message not sent.')
-        else:
+        if form.validate() and xcaptcha.verify():      
+            try:
+                send_message(form.name.data, form.email.data, form.message.data)
+                flash('Message successfully sent!')
+            except SMTPRecipientsRefused as e:
+                flash('Invalid email address entered. Message not sent.')
+                email_bug_report(
+                    form.name.data,
+                    form.email.data,
+                    form.message.data,
+                    e
+                )
+            except Exception as e:
+                flash('Unknown error occurred. Message not sent.')
+                email_bug_report(
+                    form.name.data,
+                    form.email.data,
+                    form.message.data,
+                    e
+                )
+        elif not form.validate():
             flash('Invalid data supplied, message not sent.')            
+        elif not xcaptcha.verify():
+            flash('Bot suspected, message not sent.')
+        else:
+            flash('Error occurred, message not sent.')
         return redirect(url_for('about', _anchor='contact'))
 
     return render_template('index.html',
@@ -128,7 +128,6 @@ def about():
                            projects=projects,
                            skills=skills,
                            form=form,
-                           hcaptcha_sitekey=app.config['CAPTCHA_SITE_KEY'],
                            **info
                            )
 
