@@ -15,6 +15,7 @@ setup(
         'requests',
         'WTForms',
         'email-validator',
+        'Flask-xCaptcha',
     ],
     author='Benji Levine',
     author_email='benji@benjilevine.com',
