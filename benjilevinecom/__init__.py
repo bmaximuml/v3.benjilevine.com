@@ -47,7 +47,7 @@ info = {
     'email' : 'max@maxlevine.co.uk',
     'linkedin' : 'https://www.linkedin.com/in/benjilevine/',
     'github' : 'https://github.com/benjilev08',
-    'cv_file' : 'assets/Benji_Levine_CV.pdf',
+    'cv_file' : 'assets/Max_Levine_CV.pdf',
     'main_photo' :  'assets/portrait.jpeg',
     'second_photo' : 'assets/Madrid.jpg',
     'logo' : 'assets/logo.png'
