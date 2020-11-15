@@ -17,10 +17,10 @@ def create_application():
     application.secret_key = environ['FLASK_SECRET_KEY']
     sqlalchemy_database_uri = (
         'mysql+mysqlconnector://{}:{}@{}:{}/benjilevine.com'.format(
-            environ['BENJI_LEVINE_DB_USERNAME'],
-            environ['BENJI_LEVINE_DB_PASSWORD'],
-            environ['BENJI_LEVINE_DB_HOST'],
-            environ['BENJI_LEVINE_DB_PORT']
+            environ['MAX_LEVINE_DB_USERNAME'],
+            environ['MAX_LEVINE_DB_PASSWORD'],
+            environ['MAX_LEVINE_DB_HOST'],
+            environ['MAX_LEVINE_DB_PORT']
         )
     )
     application.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
@@ -136,13 +136,13 @@ def send_message(name, email, message, subject=None):
     send_to = 'contactform@maxlevine.com'
 
     s = SMTP_SSL(
-        environ['BENJI_LEVINE_SMTP_HOST'],
-        environ['BENJI_LEVINE_SMTP_PORT']
+        environ['MAX_LEVINE_SMTP_HOST'],
+        environ['MAX_LEVINE_SMTP_PORT']
     )
 
     s.login(
-        environ['BENJI_LEVINE_SMTP_USERNAME'],
-        environ['BENJI_LEVINE_SMTP_PASSWORD']
+        environ['MAX_LEVINE_SMTP_USERNAME'],
+        environ['MAX_LEVINE_SMTP_PASSWORD']
     )
 
     msg = EmailMessage()
