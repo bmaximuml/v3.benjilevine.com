@@ -133,7 +133,7 @@ def about():
 
 
 def send_message(name, email, message, subject=None):
-    send_to = 'contactform@benjilevine.com'
+    send_to = 'contactform@maxlevine.com'
 
     s = SMTP_SSL(
         environ['BENJI_LEVINE_SMTP_HOST'],
@@ -147,7 +147,7 @@ def send_message(name, email, message, subject=None):
 
     msg = EmailMessage()
     msg.set_content(message)
-    msg['Subject'] = f'{name} - benjilevine.com Contact Form' if subject is None else subject
+    msg['Subject'] = f'{name} - maxlevine.com Contact Form' if subject is None else subject
     #msg['From'] = send_to
     #msg['From'] = name + ' <' + email + '>'
     msg['From'] = email
@@ -159,8 +159,8 @@ def send_message(name, email, message, subject=None):
 
 
 def email_bug_report(name, email, message, error):
-    e_from = 'website@benjilevine.com'
-    subject = 'Bug Report - benjilevine.com'
+    e_from = 'website@maxlevine.co.uk'
+    subject = 'Bug Report - maxlevine.co.uk'
     message = (
         f'Name: {name}\n' +
         f'From: {email}\n' +
